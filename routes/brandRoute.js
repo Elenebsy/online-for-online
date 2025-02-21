@@ -13,17 +13,12 @@ const router = express.Router();
 router
   .route('/')
   .get(getBrands)
-  .post(
-    createBrand
-  );
+  .post(createBrand);
+
 router
   .route('/:id')
-  .get( getBrand)
-  .put(
-    updateBrand
-  )
-  .delete(
-    deleteBrand
-  );
+  .get(getBrand)
+  .put(updateBrand)
+  .delete(deleteBrand);
 
 module.exports = router;
