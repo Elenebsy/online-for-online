@@ -1,4 +1,12 @@
 const express = require('express');
+const {
+  getBrandValidator,
+  createBrandValidator,
+  updateBrandValidator,
+  deleteBrandValidator,
+} = require('../utils/validators/brandValidator');
+
+const authService = require('../services/authService');
 
 const {
   getBrands,
@@ -14,15 +22,24 @@ router
   .route('/')
   .get(getBrands)
   .post(
+    authService.protect,
+    authService.allowedTo('admin', 'manager'),
+    createBrandValidator,
     createBrand
   );
 router
   .route('/:id')
-  .get( getBrand)
+  .get(getBrandValidator, getBrand)
   .put(
+    authService.protect,
+    authService.allowedTo('admin', 'manager'),
+    updateBrandValidator,
     updateBrand
   )
   .delete(
+    authService.protect,
+    authService.allowedTo('admin'),
+    deleteBrandValidator,
     deleteBrand
   );
 
