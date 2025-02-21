@@ -1,5 +1,7 @@
 const express = require('express');
 
+
+
 const {
   getBrands,
   getBrand,
@@ -18,7 +20,7 @@ router
   );
 router
   .route('/:id')
-  .get( getBrand)
+  .get(getBrand)
   .put(
     updateBrand
   )
