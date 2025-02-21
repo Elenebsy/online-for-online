@@ -6,6 +6,8 @@ const connectLivereload = require("connect-livereload");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 
+// Import Routes
+const brandRoute = require('./routes/brandRoute');
 
 
 const port = process.env.PORT || 5000;
@@ -33,6 +35,8 @@ app.get("/", (req, res) => {
   res.send("Hello World, from cs309");
 });
 
+//routes
+app.use('/api/v1/brands', brandRoute);
 
 
 // MongoDB connection and server startup
