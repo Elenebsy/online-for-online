@@ -7,11 +7,13 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 // Import Routes
-const brandRoute = require('./routes/brandRoute');
-
+const brandRoute = require("./routes/brandRoute");
+const categoryRoute = require("./routes/categoryRoute");
 
 const port = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://mezo:CR7@cluster0.af6ud0j.mongodb.net/Madarek?retryWrites=true&w=majority&appName=Cluster0";
+const MONGO_URI =
+  process.env.MONGO_URI ||
+  "mongodb+srv://mezo:CR7@cluster0.af6ud0j.mongodb.net/Madarek?retryWrites=true&w=majority&appName=Cluster0";
 
 // App service
 const app = express();
@@ -36,8 +38,8 @@ app.get("/", (req, res) => {
 });
 
 //routes
-app.use('/api/v1/brands', brandRoute);
-
+app.use("/api/v1/brands", brandRoute);
+app.use("/api/v1/categories", categoryRoute);
 
 // MongoDB connection and server startup
 mongoose
