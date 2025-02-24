@@ -4,53 +4,68 @@ const { model } = require("mongoose");
 exports.deleteOne = (Model) =>
   asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const document = model.findOneAndDelete({ _id: id });
+    const document = await Model.findByIdAndDelete(id);
 
     if (!document) {
       return res.status(404).json({ msg: `No document for this id ${id}` });
     }
 
     document.remove();
-    res.status(204).send({ msg: "Document deleted" });
+    res.status(204).json({
+      status: "success",
+      data: document,
+    });
   });
 
 exports.updateOne = (Model) =>
   asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const body = req.body;
-    const document = await model.findOneAndUpdate({ _id: id }, body);
+    const document = await Model.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
 
     if (!document) {
       return res.status(404).json({ msg: `No document for this id ${id}` });
     }
     // Trigger "save" event when update document
     document.save();
-    res.status(200).json({ data: document });
+    res.status(200).json({
+      status: "success",
+      data: document,
+    });
   });
 
 exports.createOne = (Model) =>
   asyncHandler(async (req, res) => {
-    const body = req.body;
-    const newDoc = await model.create(body);
-    newDoc.save();
-    res.status(201).json({ data: newDoc });
+    const newDoc = await Model.create(req.body);
+    res.status(201).json({
+      status: "success",
+      data: newDoc,
+    });
   });
 
 exports.getOne = (Model) =>
   asyncHandler(async (req, res, next) => {
     const { id } = req.params;
 
-    const document = await model.findOne({ _id: id });
+    const document = await Model.findById(id);
 
     if (!document) {
       return res.status(404).json({ msg: `No document for this id ${id}` });
     }
-    res.status(200).json({ data: document });
+    res.status(200).json({
+      status: "success",
+      data: document,
+    });
   });
 
 exports.getAll = (Model) =>
   asyncHandler(async (req, res) => {
-    const documents = await model.find();
+    const documents = await Model.find();
 
-    res.status(200).json({ data: documents });
+    res.status(200).json({
+      status: "success",
+      results: documents.length,
+      data: documents,
+    });
   });
