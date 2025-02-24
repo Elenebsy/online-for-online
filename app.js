@@ -9,6 +9,9 @@ require("dotenv").config();
 // Import Routes
 const brandRoute = require("./routes/brandRoute");
 const categoryRoute = require("./routes/categoryRoute");
+const subCategoryRoute = require("./routes/subcategoryRoute");
+const couponRoute = require("./routes/couponRoute");
+const reviewRoute = require("./routes/reviewRoute");
 
 const port = process.env.PORT || 5000;
 const MONGO_URI =
