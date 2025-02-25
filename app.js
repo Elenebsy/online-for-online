@@ -9,9 +9,10 @@ require("dotenv").config();
 // Import Routes
 const brandRoute = require("./routes/brandRoute");
 const categoryRoute = require("./routes/categoryRoute");
-const subCategoryRoute = require("./routes/subcategoryRoute");
+const subCategoryRoute = require("./routes/subCategoryRoute");
 const couponRoute = require("./routes/couponRoute");
 const reviewRoute = require("./routes/reviewRoute");
+const userRoute = require("./routes/userRoute");
 
 const port = process.env.PORT || 5000;
 const MONGO_URI =
@@ -41,8 +42,13 @@ app.get("/", (req, res) => {
 });
 
 //routes
+
 app.use("/api/v1/brands", brandRoute);
 app.use("/api/v1/categories", categoryRoute);
+app.use("/api/v1/subcategories", subCategoryRoute);
+app.use("/api/v1/coupons", couponRoute);
+app.use("/api/v1/reviews", reviewRoute);
+app.use("/api/v1/users", userRoute);
 
 // MongoDB connection and server startup
 mongoose
