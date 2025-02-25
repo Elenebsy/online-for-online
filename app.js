@@ -7,17 +7,17 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 // Import Routes
-const brandRoute = require('./routes/brandRoute');
-const categoryRoute = require('./routes/categoryRoute');
-const subCategoryRoute = require('./routes/subCategoryRoute');
-const couponRoute = require('./routes/couponRoute');
-const reviewRoute = require('./routes/reviewRoute');
-const userRoute = require('./routes/userRoute');
-
-
+const brandRoute = require("./routes/brandRoute");
+const categoryRoute = require("./routes/categoryRoute");
+const subCategoryRoute = require("./routes/subCategoryRoute");
+const couponRoute = require("./routes/couponRoute");
+const reviewRoute = require("./routes/reviewRoute");
+const userRoute = require("./routes/userRoute");
 
 const port = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://mezo:CR7@cluster0.af6ud0j.mongodb.net/Madarek?retryWrites=true&w=majority&appName=Cluster0";
+const MONGO_URI =
+  process.env.MONGO_URI ||
+  "mongodb+srv://mezo:CR7@cluster0.af6ud0j.mongodb.net/Madarek?retryWrites=true&w=majority&appName=Cluster0";
 
 // App service
 const app = express();
