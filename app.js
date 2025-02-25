@@ -13,6 +13,7 @@ const subCategoryRoute = require("./routes/subCategoryRoute");
 const couponRoute = require("./routes/couponRoute");
 const reviewRoute = require("./routes/reviewRoute");
 const userRoute = require("./routes/userRoute");
+const productRoute = require("./routes/productRoute");
 
 const port = process.env.PORT || 5000;
 const MONGO_URI =
@@ -49,6 +50,7 @@ app.use("/api/v1/subcategories", subCategoryRoute);
 app.use("/api/v1/coupons", couponRoute);
 app.use("/api/v1/reviews", reviewRoute);
 app.use("/api/v1/users", userRoute);
+app.use("/api/v1/products", productRoute);
 
 // MongoDB connection and server startup
 mongoose
