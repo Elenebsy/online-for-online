@@ -10,6 +10,7 @@ const Brand = require("./models/brandModel");
 const Coupon = require("./models/couponModel");
 const Review = require("./models/reviewModel");
 const User = require("./models/userModel");
+const Cart = require("./models/cartModel");
 
 mongoose
   .connect(
@@ -21,6 +22,56 @@ mongoose
   )
   .then(() => console.log("Database Connected"))
   .catch((err) => console.error("DB Connection Error:", err));
+const generateCarts = async (users, products, count = 50) => {
+  let carts = [];
+
+  if (!users || !Array.isArray(users) || users.length === 0) {
+    console.error("❌ No users found!");
+    process.exit(1); // Exit the process if no users found
+  }
+
+  if (!products || !Array.isArray(products) || products.length === 0) {
+    console.error("❌ No products found!");
+    process.exit(1); // Exit the process if no products found
+  }
+
+  for (let i = 0; i < count; i++) {
+    const user = users[Math.floor(Math.random() * users.length)]; // Random user
+    const cartItemsCount = faker.number.int({ min: 1, max: 5 }); // Random number of items in the cart
+    let cartItems = [];
+    let totalCartPrice = 0;
+
+    for (let j = 0; j < cartItemsCount; j++) {
+      const product = products[Math.floor(Math.random() * products.length)]; // Random product
+      const quantity = faker.number.int({ min: 1, max: 10 });
+      const price = product.priceAfterDiscount || product.price;
+      const totalItemPrice = quantity * price;
+
+      // Add product item to the cart
+      cartItems.push({
+        product: product._id,
+        quantity,
+        color: faker.commerce.product(),
+        price,
+      });
+
+      // Accumulate total price
+      totalCartPrice += totalItemPrice;
+    }
+
+    const totalPriceAfterDiscount =
+      totalCartPrice * (1 - faker.number.float({ min: 0, max: 0.3 })); // Random discount
+
+    carts.push({
+      cartItems,
+      totalCartPrice,
+      totalPriceAfterDiscount,
+      user: user._id, // Assign to the random user
+    });
+  }
+
+  return carts;
+};
 
 const generateProducts = async (count = 100) => {
   const categories = await Category.find().select("_id"); // Fetch existing categories
@@ -168,14 +219,32 @@ const generateUsers = async (count = 50) => {
 
 const insertData = async () => {
   try {
-    await Category.insertMany(generateCategories());
-    await SubCategory.insertMany(await generateSubCategories());
+    // await Category.insertMany(generateCategories());
+    // await SubCategory.insertMany(await generateSubCategories());
     console.log("✅ SubCategories Inserted");
-    await Brand.insertMany(generateBrands());
-    await Coupon.insertMany(generateCoupons());
-    await User.insertMany(await generateUsers());
-    await Product.insertMany(await generateProducts());
-    await Review.insertMany(await generateReviews());
+    // await Brand.insertMany(generateBrands());
+    // await Coupon.insertMany(generateCoupons());
+    // await User.insertMany(await generateUsers());
+    // await Product.insertMany(await generateProducts());
+    // await Review.insertMany(await generateReviews());
+
+    const users = await User.find().select("_id"); // Fetch existing users
+    const products = await Product.find().select(
+      "_id price priceAfterDiscount"
+    ); // Fetch product ids and prices
+
+    // Check if users and products are retrieved correctly
+    console.log("Users found:", users.length);
+    console.log("Products found:", products.length);
+
+    // Check if arrays are populated
+    if (!users.length || !products.length) {
+      console.error("❌ No users or products found! Cannot insert cart data.");
+      process.exit(1); // Exit the script if there's no data
+    }
+
+    const carts = await generateCarts(users, products);
+    await Cart.insertMany(carts);
 
     console.log("✅ 1000 Products Inserted Successfully!");
     mongoose.connection.close();
