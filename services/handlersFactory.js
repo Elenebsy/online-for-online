@@ -10,10 +10,10 @@ exports.deleteOne = (Model) =>
       return res.status(404).json({ msg: `No document for this id ${id}` });
     }
 
-    document.remove();
-    res.status(204).json({
+    res.status(200).json({
       status: "success",
-      data: document,
+      data: null,
+      msg: "Document deleted successfully",
     });
   });
 

@@ -18,7 +18,7 @@ const productRoute = require("./routes/productRoute");
 const port = process.env.PORT || 5000;
 const MONGO_URI =
   process.env.MONGO_URI ||
-  "mongodb+srv://mezo:CR7@cluster0.af6ud0j.mongodb.net/Madarek?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://bdalkhalqbdalrhym06:XwkwrbrcioeABGsN@cluster0.oqgoz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // App service
 const app = express();
