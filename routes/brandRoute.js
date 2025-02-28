@@ -18,6 +18,8 @@ const router = express.Router();
 
 router.route("/").get(getBrands).post(createBrandValidator, createBrand);
 
+router.route("/").get(getBrands).post(createBrandValidator, createBrand);
+
 router
   .route("/:id")
   .get(getBrandValidator, getBrand)
