@@ -1,5 +1,6 @@
 const factory = require("./handlersFactory");
 const Review = require("../models/reviewModel");
+const ApiError = require("../utils/apiError");
 
 // @desc    Get list of reviews
 // @route   GET /api/v1/reviews

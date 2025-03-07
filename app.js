@@ -17,6 +17,7 @@ const productRoute = require("./routes/productRoute");
 const cartRoute = require("./routes/cartRoute");
 const orderRoute = require("./routes/orderRoute");
 const wishlistRoute = require("./routes/wishlistRoute");
+const authRoute = require("./routes/authRoute");
 
 const port = process.env.PORT || 5000;
 const MONGO_URI =
@@ -58,6 +59,7 @@ app.use("/api/v1/carts", cartRoute);
 app.use("/api/v1/orders", orderRoute);
 app.use("/api/v1/wishlists", wishlistRoute);
 
+app.use("/api/v1/auth", authRoute);
 // MongoDB connection and server startup
 mongoose
   .connect(MONGO_URI)
